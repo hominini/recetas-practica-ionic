@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">recetas</string>
+    <string name="title_activity_main">recetas</string>
+    <string name="package_name">com.recetas.app</string>
+    <string name="fileprovider_authority">com.recetas.app.fileprovider</string>
+    <string name="custom_url_scheme">com.recetas.app</string>
+</resources>
