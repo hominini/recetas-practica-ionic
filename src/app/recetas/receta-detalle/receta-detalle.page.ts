@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecetasService } from '../recetas.service';
-import { Receta } from '../receta.model';
+import { Recipe } from '../receta.model';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-receta-detalle',
@@ -10,22 +11,48 @@ import { Receta } from '../receta.model';
 })
 export class RecetaDetallePage implements OnInit {
 
-  recetaCargada: Receta;
+  recipe: Recipe;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private recetasService: RecetasService,
+    private router: Router,
+    private alertController: AlertController,
   ) { }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       if (!paramMap.has('idReceta')) {
-        //redirect
+        // redirect
+        this.router.navigate(['/recipes']);
         return;
       }
 
       const idReceta = paramMap.get('idReceta');
-      this.recetaCargada = this.recetasService.obtenerReceta(idReceta);
+      this.recipe = this.recetasService.obtenerReceta(idReceta);
     });
   }
 
+  onDeleteRecipe() {
+    this.alertController.create({
+      header: 'Estás seguro?',
+      message: 'Realmente quieres eliminar ésta receta?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.recetasService.eliminarReceta(this.recipe.id);
+            this.router.navigate(['/recetas']);
+          }
+        }
+      ],
+    })
+    .then(alertEl => {
+      alertEl.present();
+    });
+  }
 }
