@@ -2,20 +2,10 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'recetas', pathMatch: 'full' },
-  { path: 'recetas',
-    children: [
-      {
-        path: '',
-        loadChildren: './recetas/recetas.module#RecetasPageModule',
-      }
-      ,
-      {
-        path: ':idReceta',
-        loadChildren: './recetas/receta-detalle/receta-detalle.module#RecetaDetallePageModule'
-      }
-    ]
-  },
+  { path: '', redirectTo: 'places', pathMatch: 'full' },
+  { path: 'auth', loadChildren: './auth/auth.module#AuthPageModule' },
+  { path: 'places', loadChildren: './places/places.module#PlacesPageModule' },
+  { path: 'bookings', loadChildren: './bookings/bookings.module#BookingsPageModule' },
 ];
 
 @NgModule({
